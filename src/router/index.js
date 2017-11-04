@@ -32,6 +32,9 @@ let router = new Router({
       children:[{
         path: '/main/test',
         component: resolve => require(['../pages/test/index.vue'], resolve)
+      },{
+        path: '/index',
+        component: resolve => require(['../pages/index/index.vue'], resolve)
       }]
     }
   ]

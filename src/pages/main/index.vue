@@ -2,7 +2,7 @@
   <div class="main">
     <ge-head class="main-header"></ge-head>
     <div class="main-container">
-      <ge-aside class="main-aside"></ge-aside>
+      <ge-aside class="main-aside"  v-show="false"></ge-aside>
       <router-view class="main-right-container"></router-view>
     </div>
 
@@ -41,7 +41,7 @@
     position: relative;
   }
 </style>
-<style>
+<style lang="scss">
   .main-header {
     width: 100%;
     height: 50px;
@@ -53,8 +53,11 @@
   }
 
   .main-container {
+
     height: 100%;
-    padding-left: 200px;
+    &.act{
+       padding-left: 200px;
+     }
     position: relative;
     overflow: hidden;
   }
