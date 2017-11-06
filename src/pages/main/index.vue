@@ -3,7 +3,7 @@
     <ge-head class="main-header"></ge-head>
     <div class="main-container">
       <ge-aside class="main-aside"  v-show="false"></ge-aside>
-      <router-view class="main-right-container"></router-view>
+      <router-view class="main-right-container" :key="$route.path"></router-view>
     </div>
 
   </div>

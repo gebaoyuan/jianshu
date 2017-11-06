@@ -1,5 +1,7 @@
 <template>
-  <div class="art-item-wrap">
+  <router-link
+    :to="'/p/'+mainArticle.slug"
+    class="art-item-wrap" >
     <div class="author">
       <a href="">
         <img v-lazy="mainArticle.user.avatar" class="author-icon">
@@ -24,7 +26,7 @@
       </a>
       {{artInterText}}
     </div>
-  </div>
+  </router-link>
 </template>
 <script>
   export default {
@@ -70,6 +72,7 @@
   }
 
   .art-item-wrap {
+    display: block;
     padding: 15px 10px;
     background: #fff;
     margin: {

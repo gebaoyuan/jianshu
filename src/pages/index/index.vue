@@ -1,7 +1,7 @@
 <template>
   <div
     v-infinite-scroll="loadMore"
-    infinite-scroll-disabled="busy"
+    infinite-scroll-disabled="isBusyOrEnd"
     infinite-scroll-distance="10"
     class="article-warp"
   >
@@ -9,7 +9,8 @@
       :key="article.object.data.id"
       v-for="article in articleList"
       :article="article"></my-article>
-    <loading v-show="busy"></loading>
+    <loading v-show="busy && !isMaxArtcile"></loading>
+    <div v-show="isMaxArtcile" class="no-more-article">没有更多了...</div>
   </div>
 </template>
 <script>
@@ -34,6 +35,7 @@
         busy: true,
         curPage: 1,
         noteIds: [],
+        isMaxArtcile: false
       }
     },
     methods: {
@@ -51,6 +53,10 @@
         })
           .then(({code, msg, data}) => {
             if (!code) {
+              if (!data.length) {
+                this.isMaxArtcile = true;
+                return;
+              }
               this.articleList.push(...data);
               data.map(item => {
                 this.noteIds.push(item.object.data.id)
@@ -64,16 +70,24 @@
           .catch(errorCb)
       }
     },
-    computed: {},
+    computed: {
+      isBusyOrEnd() {
+        return this.busy || this.isMaxArtcile;
+      }
+    },
     filters: {},
 
   }
 </script>
 <style scoped>
-
+  .no-more-article {
+    line-height: 40px;
+    text-align: center;
+  }
 </style>
 <style lang="scss">
   .article-warp {
     background: #f5f5f5;
   }
+
 </style>

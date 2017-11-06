@@ -35,6 +35,9 @@ let router = new Router({
       },{
         path: '/index',
         component: resolve => require(['../pages/index/index.vue'], resolve)
+      },{
+        path: '/p/:id',
+        component: resolve => require(['../pages/articleDetail/index.vue'], resolve)
       }]
     }
   ]

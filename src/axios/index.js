@@ -10,5 +10,9 @@ export default {
     return axios.get(url, {
       params: send
     })
+  },
+  getArticleDetail(send) {
+    let url = "api/p/" + send;
+    return axios.get(url)
   }
 }
