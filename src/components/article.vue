@@ -2,13 +2,14 @@
   <div class="art-item-wrap">
     <div class="author">
       <a href="">
-        <img :src="mainArticle.user.avatar" class="author-icon">
+        <img v-lazy="mainArticle.user.avatar" class="author-icon">
       </a>
       <a href="" class="author-name"> {{mainArticle.user.nickname}}</a>
     </div>
     <div class="poster-img"
          v-if="mainArticle.list_image_url"
-         :style="{'background-image':'url('+mainArticle.list_image_url +')'}">
+         v-lazy:background-image="mainArticle.list_image_url"
+         >
     </div>
     <div class="art-title">
       {{mainArticle.title}}
@@ -19,7 +20,7 @@
 
     <div class="art-mate">
       <a href="" class="collection-tag">
-        {{mainArticle.important_collection.title}}
+        {{mainArticle.important_collection && mainArticle.important_collection.title}}
       </a>
       {{artInterText}}
     </div>
@@ -139,6 +140,7 @@
         line-height: 1;
         color: #ea6f5a;
         border: 1px solid #ea6f5a;
+        border-radius: 3px;
       }
     }
 

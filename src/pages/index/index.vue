@@ -1,9 +1,15 @@
 <template>
-  <div class="article-warp">
+  <div
+    v-infinite-scroll="loadMore"
+    infinite-scroll-disabled="busy"
+    infinite-scroll-distance="10"
+    class="article-warp"
+  >
     <my-article
       :key="article.object.data.id"
       v-for="article in articleList"
       :article="article"></my-article>
+    <loading v-show="busy"></loading>
   </div>
 </template>
 <script>
@@ -20,23 +26,43 @@
 
     },
     mounted() {
-      this.$ajax.getArticleList({
-        page: 1,
-        count: 15
-      })
-        .then(({code, msg, data}) => {
-          if (!code) {
-            this.articleList = data;
-          }
-        })
+      this.getArticleList();
     },
     data() {
       return {
-        articleList: []
+        articleList: [],
+        busy: true,
+        curPage: 1,
+        noteIds: [],
       }
     },
     methods: {
-      ...mapMutations('createTimeTable', ['setState'])
+      ...mapMutations('createTimeTable', ['setState']),
+      loadMore() {
+        this.busy = true;//关闭滚动加载
+        this.curPage++;
+        this.getArticleList();
+      },
+      getArticleList(errorCb) {
+        this.$ajax.getArticleList({
+          page: this.curPage,
+          count: 15,
+          note_ids: this.noteIds
+        })
+          .then(({code, msg, data}) => {
+            if (!code) {
+              this.articleList.push(...data);
+              data.map(item => {
+                this.noteIds.push(item.object.data.id)
+              })
+              //请求完成 开启滚动加载
+              this.$nextTick(() => {
+                this.busy = false;
+              });
+            }
+          })
+          .catch(errorCb)
+      }
     },
     computed: {},
     filters: {},
