@@ -1,20 +1,21 @@
 <template>
   <div class="main">
-    <ge-head class="main-header"></ge-head>
     <div class="main-container">
-      <ge-aside class="main-aside"  v-show="false"></ge-aside>
-      <router-view class="main-right-container" :key="$route.path"></router-view>
+      <keep-alive v-if="$route.meta.keepAlive">
+        <router-view class="main-right-container" :key="$route.path"></router-view>
+      </keep-alive>
+      <router-view v-else class="main-right-container" :key="$route.path"></router-view>
     </div>
-
+    <ge-foot class="footer"></ge-foot>
   </div>
 </template>
 <script>
   import geAside from './aside.vue';
-  import foot from './foot.vue';
+  import GeFoot from './foot.vue';
   import geHead from './head.vue';
 
   export default {
-    components: {geAside, foot, geHead},
+    components: {geAside, GeFoot,},
     props: {},
     beforeCreate() {
     },
@@ -32,20 +33,26 @@
 
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .main {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding-top: 50px;
+    padding-bottom: 50px;
     position: relative;
+    .footer{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+    }
   }
 </style>
 <style lang="scss">
   .main-header {
     width: 100%;
     height: 50px;
-    background: red;
     position: absolute;
     top: 0;
     left: 0;
@@ -55,9 +62,9 @@
   .main-container {
 
     height: 100%;
-    &.act{
-       padding-left: 200px;
-     }
+    &.act {
+      padding-left: 200px;
+    }
     position: relative;
     overflow: hidden;
   }

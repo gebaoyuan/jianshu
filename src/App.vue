@@ -16,6 +16,9 @@ export default {
     margin: 0;
     list-style: none;
   }
+  a{
+    text-decoration: none;
+  }
 #app,html,body {
   width: 100%;
   height: 100%;

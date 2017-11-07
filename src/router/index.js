@@ -34,10 +34,12 @@ let router = new Router({
         component: resolve => require(['../pages/test/index.vue'], resolve)
       },{
         path: '/index',
-        component: resolve => require(['../pages/index/index.vue'], resolve)
+        component: resolve => require(['../pages/index/index.vue'], resolve),
+        meta:{keepAlive: true}
       },{
         path: '/p/:id',
-        component: resolve => require(['../pages/articleDetail/index.vue'], resolve)
+        component: resolve => require(['../pages/articleDetail/index.vue'], resolve),
+        meta:{keepAlive: true}
       }]
     }
   ]

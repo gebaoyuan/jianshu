@@ -16,9 +16,6 @@
     created() {
 
     },
-    updated() {
-      console.log('updated');
-    },
     mounted() {
       this.$ajax.getArticleDetail(this.$route.params.id)
         .then(({data, code, msg}) => {
@@ -26,7 +23,6 @@
             this.articleData = data;
             this.articleContainer = data.article.contain
           }
-          this.test = res.data;
         })
     },
     data() {
@@ -98,7 +94,7 @@
       color: #b1b1b1;
       text-align: left;
       .avatar {
-
+        vertical-align: middle;
         display: inline-block;
         line-height: 1;
         img {
@@ -110,6 +106,7 @@
       }
       .info {
         display: inline-block;
+        vertical-align: middle;
         .name {
           margin-right: 3px;
           font-size: 16px;
